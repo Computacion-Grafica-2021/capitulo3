@@ -21,19 +21,19 @@
 //  wcHeight = wcWidth * viewport[3]/viewport[2]
 //
 function Camera(wcCenter, wcWidth, viewportArray) {
-    // WC and viewport position and size
+    // WC y ventana grafica, posicion y tamano
     this.mWCCenter = wcCenter;
     this.mWCWidth = wcWidth;
     this.mViewport = viewportArray;  // [x, y, width, height]
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
 
-    // transformation matrices
+    // Transformacion de matrices
     this.mViewMatrix = mat4.create();
     this.mProjMatrix = mat4.create();
     this.mVPMatrix = mat4.create();
 
-    // background color
+    // Color de fondo
     this.mBgColor = [0.8, 0.8, 0.8, 1]; // RGB and Alpha
 }
 

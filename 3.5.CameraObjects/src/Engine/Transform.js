@@ -1,19 +1,9 @@
-/* 
- * File: Transform.js
- * Encapsulates the matrix transformation functionality, meant to work with
- * Renderable
- */
-
-/*jslint node: true, vars: true */
-/*global gEngine: false, vec2: false, Math: false, mat4: false, vec3: false */
-/* find out more about jslint: http://www.jslint.com/help.html */
-
 "use strict";
 
 function Transform() {
-    this.mPosition = vec2.fromValues(0, 0);  // this is the translation
-    this.mScale = vec2.fromValues(1, 1);     // this is the width (x) and height (y)
-    this.mRotationInRad = 0.0;               // in radians!
+    this.mPosition = vec2.fromValues(0, 0);  // ista es la traslacion
+    this.mScale = vec2.fromValues(1, 1);     // este es el ancho (x) y el alto (y) 
+    this.mRotationInRad = 0.0;               // en radianes!
 }
 
 // <editor-fold desc="Public Methods">
@@ -69,19 +59,19 @@ Transform.prototype.getRotationInDegree = function () { return this.mRotationInR
     //</editor-fold>
 //</editor-fold>
 //
-// returns the matrix the concatenates the transformations defined
+// devuelve la matriz concatena las transformaciones definidas 
 Transform.prototype.getXform = function () {
-    // Creates a blank identity matrix
+    // Crea una matriz de identidad en blanco 
     var matrix = mat4.create();
 
-    // The matrices that WebGL uses are transposed, thus the typical matrix
-    // operations must be in reverse.
+    // Las matrices que utiliza WebGL se trasponen, por lo que la matriz típica
+    // las operaciones deben ser al revés.
 
-    // Step A: compute translation, for now z is always at 0.0
+    // Paso A: se computa la translacion, por ahora z siempre está en 0.0
     mat4.translate(matrix, matrix, vec3.fromValues(this.getXPos(), this.getYPos(), 0.0));
-    // Step B: concatenate with rotation.
+    // Paso B: concatenar con rotación.
     mat4.rotateZ(matrix, matrix, this.getRotationInRad());
-    // Step C: concatenate with scaling
+    // Paso C: concatena con escala
     mat4.scale(matrix, matrix, vec3.fromValues(this.getWidth(), this.getHeight(), 1.0));
 
     return matrix;

@@ -1,37 +1,29 @@
-/*
- * File: MyGame.js 
- * This is the logic of our game. For now, this is very simple.
- */
-/*jslint node: true, vars: true */
-/*global gEngine: false, SimpleShader: false, Renderable: false, Camera: false, mat4: false, vec3: false, vec2: false */
-/* find out more about jslint: http://www.jslint.com/help.html */
-
-"use strict";  // Operate in Strict mode such that variables must be declared before used!
+"use strict"; 
 
 function MyGame(htmlCanvasID) {
-    // variables of the shader for drawing: one shader to be shared by two renderables
+    // variables del sombreador para dibujar: un sombreador para ser compartido por dos renderizables
     this.mConstColorShader = null;
 
-    // variables for the squares
-    this.mBlueSq = null;        // these are the Renderable objects
+    // variables para los cuadrados
+    this.mBlueSq = null;        // estos son los objetos renderizables
     this.mRedSq = null;
 
-    // Step A: Initialize the webGL Context
+    // Paso A: Inicializar el contexto webGL
     gEngine.Core.initializeWebGL(htmlCanvasID);
 
-    // Step B: Setup the camera
+    // Paso B: Configurar la cámara
     this.mCamera = new Camera(
-        vec2.fromValues(20, 60),   // center of the WC
-        20,                        // width of WC
-        [20, 40, 600, 300]         // viewport (orgX, orgY, width, height)
+        vec2.fromValues(20, 60),   // centro de WC
+        20,                        // ancho de WC
+        [20, 40, 600, 300]         // ventana grafica (orgX, orgY, width, height)
         );
 
-    // Step C: Create the shader
+    // Paso C: creacin de los sombreados
     this.mConstColorShader = new SimpleShader(
-        "src/GLSLShaders/SimpleVS.glsl",      // Path to the VertexShader 
-        "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
+        "src/GLSLShaders/SimpleVS.glsl",      //Camino al VertexShader 
+        "src/GLSLShaders/SimpleFS.glsl");    // camino al FragmentShader
 
-    // Step D: Create the Renderable objects:
+    // Paso D: Crear objetos renderizables:
     this.mBlueSq = new Renderable(this.mConstColorShader);
     this.mBlueSq.setColor([0.25, 0.25, 0.95, 1]);
     this.mRedSq = new Renderable(this.mConstColorShader);
@@ -45,39 +37,39 @@ function MyGame(htmlCanvasID) {
     this.mBLSq = new Renderable(this.mConstColorShader);
     this.mBLSq.setColor([0.1, 0.1, 0.1, 1]);
 
-    // Step E: Clear the canvas
-    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]);        // Clear the canvas
+    // Paso E: Limpieza del lienzo
+    gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]);        // Limpieza del lienzo
 
-    // Step F: Starts the drawing by activating the camera
+    // Paso F: Inicia el dibujo activando la cámara.
     this.mCamera.setupViewProjection();
     var vpMatrix = this.mCamera.getVPMatrix();
 
-    // Step G: Draw the blue square
-    // Centre Blue, slightly rotated square
+    // Paso G: Dibuja el cuadrado azul
+    // Centro azul, cuadrado ligeramente girado
     this.mBlueSq.getXform().setPosition(20, 60);
-    this.mBlueSq.getXform().setRotationInRad(0.2); // In Radians
+    this.mBlueSq.getXform().setRotationInRad(0.2); // En radianes
     this.mBlueSq.getXform().setSize(5, 5);
     this.mBlueSq.draw(vpMatrix);
 
-    // Step H: Draw the center and the corner squares
-    // centre red square
+    // PAso H: Dibuja el centro y los cuadrados de las esquinas.
+    // centro cuadrado rojo
     this.mRedSq.getXform().setPosition(20, 60);
     this.mRedSq.getXform().setSize(2, 2);
     this.mRedSq.draw(vpMatrix);
 
-    // top left
+    // arriba a la izquierda
     this.mTLSq.getXform().setPosition(10, 65);
     this.mTLSq.draw(vpMatrix);
 
-    // top right
+    // arriba a la derecha
     this.mTRSq.getXform().setPosition(30, 65);
     this.mTRSq.draw(vpMatrix);
 
-    // bottom right
+    // abajo a la derecha
     this.mBRSq.getXform().setPosition(30, 55);
     this.mBRSq.draw(vpMatrix);
 
-    // bottom left
+    // abajo a la izquierda
     this.mBLSq.getXform().setPosition(10, 55);
     this.mBLSq.draw(vpMatrix);
 }
